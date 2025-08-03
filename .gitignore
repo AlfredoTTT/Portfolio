@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular
+dist/
+.angular/
+*.log
+
+# Environment files
+.env
+*.env
+
+# MongoDB
+data/
