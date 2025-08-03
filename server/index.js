@@ -1,28 +1,26 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+app.use(cors()); // Para permitir CORS
+app.use(express.json()); // Para parsear JSON en el body
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+app.post('/api/validar-token', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Si viene como "Bearer token"
 
-app.get('/', (req, res) => {
-    res.send('Portfolio Server is Running');
+  if (!token) {
+    return res.status(400).json({ message: 'Token no proporcionado' });
+  }
+
+  if (token.length > 3) {
+    return res.status(200).json({ message: 'Token válido' });
+  } else {
+    return res.status(401).json({ message: 'Token inválido (muy corto)' });
+  }
 });
 
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
 });
-
-const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);

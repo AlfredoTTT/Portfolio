@@ -1,7 +1,4 @@
-<div class="container">
-  <h2>Ingresa tu token</h2>
-  <form (ngSubmit)="enviarToken()">
-    <input type="text" [(ngModel)]="token" name="token" placeholder="Ingresa tu token aquí" required>
-    <button type="submit">Enviar</button>
-  </form>
+<Alert *ngIf="alerta" [type]="alerta.type" [message]="alerta.message" class="fixed top-4 right-4 z-50" />
+<div class="min-h-screen flex items-center justify-center bg-gray-50">
+  <Login></Login>
 </div>

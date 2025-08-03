@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Alert } from './components/alert/alert';
+import { LoginComponent } from './pages/login/login';
+import { AlertService } from './services/alert.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
   templateUrl: './app.html',
-  styleUrls: ['./app.scss']
+  styleUrls: ['./app.scss'],
+  imports: [CommonModule, Alert, LoginComponent]
 })
 export class App {
-  token: string = '';
+  alerta: { type: 'success' | 'error'; message: string } | null = null;
 
-  enviarToken() {
-    console.log('Token enviado:', this.token);
+  constructor(private alertService: AlertService) {
+    this.alertService.alert$.subscribe((alert) => this.alerta = alert);
   }
 }
