@@ -27,7 +27,7 @@ export class LoginComponent {
       return;
     }
 
-    this.http.post('http://localhost:3000/api/validar-token', null, {
+    this.http.post('http://localhost:3000/api/token/validar', null, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
