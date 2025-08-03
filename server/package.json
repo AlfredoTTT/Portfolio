@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"node index.js\" \"cd .. && cd client && ng serve\"",
-    "dev": "nodemon index.js"
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "ts-node-dev src/index.ts",
+    "frontend": "cd ../client && ng serve"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +14,21 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
+    "dt": "^0.0.1",
     "express": "^5.1.0",
     "mongoose": "^8.17.0",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
     "concurrently": "^9.2.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.2"
   }
 }
