@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Alert } from './components/alert/alert';
-import { LoginComponent } from './pages/login/login';
+import { RouterModule } from '@angular/router';
 import { AlertService } from './services/alert.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AlertService } from './services/alert.service';
   standalone: true,
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
-  imports: [CommonModule, Alert, LoginComponent]
+  imports: [CommonModule, Alert, RouterModule]
 })
 export class App {
   alerta: { type: 'success' | 'error'; message: string } | null = null;
