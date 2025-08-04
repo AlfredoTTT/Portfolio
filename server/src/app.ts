@@ -1,15 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import tokenRoutes from './routes/token.routes';
 import { setupSwagger } from './config/swagger';
 import path from 'path';
+import inviteRoutes from './routes/invite.routes';
 
 export const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use('/api/token', tokenRoutes);
+app.use('/api/invite', inviteRoutes);
 setupSwagger(app); // 👈 Aquí cargamos Swagger
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 

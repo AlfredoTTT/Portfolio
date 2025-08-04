@@ -1,7 +1,13 @@
 import { DataSource } from 'typeorm';
+import { InviteToken } from '../entity/InviteToken';
+import { VisitLog } from '../entity/VisitLog';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+
+if (!process.env.DB_HOST || !process.env.DB_USERNAME || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
+  throw new Error('❌ Missing database configuration in .env');
+}
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -10,7 +16,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [__dirname + '/entity/*.ts'],
+  synchronize: true,
+  entities: [InviteToken, VisitLog],
   migrations: [__dirname + '/migration/*.ts'],
-  synchronize: true
 });
