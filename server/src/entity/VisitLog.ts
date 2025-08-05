@@ -12,7 +12,7 @@ export class VisitLog {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => InviteToken, (token) => token.visits, { eager: true })
+  @ManyToOne(() => InviteToken, (token) => token.visits, { eager: true , nullable: true})
   inviteToken!: InviteToken;
 
   @Column()
