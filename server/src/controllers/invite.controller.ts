@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { generateInvite, validateToken } from '../services/invite.service';
+import { CreateInviteDto, ValidateInviteDto } from '../dto/invite.dto';
 
 export const sendEmail = async (req: Request, res: Response) => {
   const { recruiterEmail } = req.body;
@@ -9,7 +10,7 @@ export const sendEmail = async (req: Request, res: Response) => {
   }
 
   try {
-    const invitacion = await generateInvite(recruiterEmail);
+    const invitacion = await generateInvite({recruiterEmail});
     res.status(201).json({
       message: 'Invitation send.',
       token: invitacion.inviteToken,
@@ -29,7 +30,7 @@ export const validarToken = async (req: Request, res: Response) => {
   }
 
   try {
-    await validateToken(token); 
+    await validateToken({inviteToken: token}); 
     return res.status(200).json({ message: 'Valid token' });
   } catch (error) {
     return res.status(401).json({ message: error instanceof Error ? error.message : 'Invalid token' });

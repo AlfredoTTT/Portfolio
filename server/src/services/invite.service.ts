@@ -1,29 +1,30 @@
 import { InviteToken } from './../entity/InviteToken';
 import { AppDataSource } from '../config/orm.config';
+import { CreateInviteDto, ValidateInviteDto } from '../dto/invite.dto';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
 const repo = AppDataSource.getRepository(InviteToken);
 
-export const generateInvite = async (recruiterEmail: string): Promise<InviteToken> => {
+export const generateInvite = async (data: CreateInviteDto): Promise<InviteToken> => {
   const inviteToken = crypto.randomBytes(16).toString('hex');
 
   const nuevaInvitacion = repo.create({
     inviteToken,
-    recruiterEmail,
+    recruiterEmail: data.recruiterEmail,
   });
 
   await repo.save(nuevaInvitacion);
 
-  const url = `http://localhost:4200/login`;
-  await sendMail(recruiterEmail, url, inviteToken);
+  const url = `http://localhost:4200`;
+  await sendMail(data.recruiterEmail, url, inviteToken);
 
   return nuevaInvitacion;
-};
+}
 
-export const validateToken = async (inviteToken: string): Promise<InviteToken> => {
+export const validateToken = async (data: ValidateInviteDto): Promise<InviteToken> => {
   const foundToken = await repo.findOne({
-    where: { inviteToken, used: false },
+    where: { inviteToken: data.inviteToken, used: false },
   });
 
   if (!foundToken) {
@@ -37,12 +38,11 @@ export const validateToken = async (inviteToken: string): Promise<InviteToken> =
   return foundToken;
 };
 
-
 const sendMail = async (destinatario: string, url: string, token: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: parseInt(process.env.MAIL_PORT || '587'),
-    secure: false, // false para STARTTLS
+    secure: false,
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
