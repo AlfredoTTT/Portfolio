@@ -7,24 +7,21 @@ import {
 
 @Entity()
 export class UserActivityLog {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
-  @Column()
-  action!: string;
-
-  @Column('jsonb', { nullable: true })
-  metadata?: any;
+   @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ nullable: true })
-  token?: string;
+  visitId!: string; // relación manual con VisitLog
 
   @Column()
-  ip!: string;
+  action!: string; // Ej: "click", "navigate", "scroll"
 
   @Column()
-  userAgent!: string;
+  target!: string; // Ej: "#button-contact", "/about"
+
+  @Column({ type: 'text', nullable: true })
+  details!: string; // info adicional (puede ser JSON.stringify())
 
   @CreateDateColumn()
-  createdAt!: Date;
+  timestamp!: Date;
 }

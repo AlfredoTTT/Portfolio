@@ -13,7 +13,7 @@ export class InviteToken {
   id!: string;
 
   @Column({ unique: true })
-  token!: string;
+  inviteToken!: string;
 
   @Column({ nullable: true })
   recruiterEmail?: string;
@@ -27,6 +27,6 @@ export class InviteToken {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @OneToMany(() => VisitLog, (visit) => visit.token)
-  visits!: VisitLog[];
+  @OneToMany(() => VisitLog, (visit) => visit.inviteToken)
+visits!: VisitLog[];
 }
