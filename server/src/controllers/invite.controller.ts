@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { generateInvite, validateToken } from '../services/invite.service';
-import { CreateInviteDto, ValidateInviteDto } from '../dto/invite.dto';
 
 export const sendEmail = async (req: Request, res: Response) => {
   const { recruiterEmail } = req.body;

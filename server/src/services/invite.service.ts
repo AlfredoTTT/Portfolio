@@ -38,7 +38,7 @@ export const validateToken = async (data: ValidateInviteDto): Promise<InviteToke
   return foundToken;
 };
 
-const sendMail = async (destinatario: string, url: string, token: string) => {
+const sendMail = async (to: string, url: string, token: string) => {
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: parseInt(process.env.MAIL_PORT || '587'),
@@ -50,7 +50,7 @@ const sendMail = async (destinatario: string, url: string, token: string) => {
   });
   await transporter.sendMail({
     from: `"Portfolio" <${process.env.MAIL_USER}>`,
-    to: destinatario,
+    to: to,
     subject: 'Invitación al portafolio',
     html: `
       <p>Hola,</p>
